@@ -2,6 +2,7 @@
 const loc = document.getElementById('location');
 const subButtn = document.getElementById('submit');
 const todaysTemp = document.getElementById('current-temperature');
+const hrsContainer = document.querySelector('.hours-container');
 
 function fetchApi(location) {
     const date = new Date();
@@ -34,7 +35,15 @@ subButtn.addEventListener('click', () => {
         console.log();
         fetchApi(inputLoc);
     }
+    renderHourInfo();
 });
 
+function renderHourInfo(){
+    const hrContainer = document.createElement('div');
+    hrContainer.className = 'hr-container';
+
+    hrsContainer.appendChild(hrContainer);
+
+}
 
 

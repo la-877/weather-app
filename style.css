@@ -13,7 +13,7 @@ body {
     align-items: center;
     position: relative;
     flex-direction: column;
-    width: 800px;
+    max-width: 800px;
     height: 650px;
     background-color: coral;
     padding: 2rem;
@@ -37,7 +37,10 @@ body {
 
 .hours-container{
     display: flex;
-    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+    overflow-x: auto;
+
 }
 
 .hr-container {
@@ -45,4 +48,6 @@ body {
     text-align: center;
     background-color: white;
     padding: 1rem;
+    width: 110px;
+    flex-shrink: 0;
 }
