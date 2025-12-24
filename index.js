@@ -21,7 +21,11 @@ function fetchApi(location) {
 
         .then(data => {
             todaysTemp.textContent = data.days[0].temp;
-            console.log();
+            //console.log(data.days[0]);
+            const hour = data.days[0].hours[22].datetime.slice(0, 2);
+            renderHourInfo(hour);
+
+
         })
 
         .catch(error => {
@@ -35,13 +39,27 @@ subButtn.addEventListener('click', () => {
         console.log();
         fetchApi(inputLoc);
     }
-    renderHourInfo();
+    
 });
 
-function renderHourInfo(){
+function renderHourInfo(hrTime){
     const hrContainer = document.createElement('div');
     hrContainer.className = 'hr-container';
 
+    const hour = document.createElement('hour');
+    hour.className = 'hour';
+    if (hrTime.startsWith('0')) {
+        hrTime = hrTime.substring(1); 
+    }
+    if (parseInt(hrTime.substring(0,2)) < 12){
+        hour.textContent = hrTime + 'am';
+    }
+    else {
+        hour.textContent = `${parseInt(hrTime) - 12}pm`
+    }
+    
+
+    hrContainer.appendChild(hour);
     hrsContainer.appendChild(hrContainer);
 
 }
