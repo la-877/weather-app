@@ -1,0 +1,48 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+}
+
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex-direction: column;
+    width: 800px;
+    height: 650px;
+    background-color: coral;
+    padding: 2rem;
+
+}
+
+.top{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.middle {
+    width: 100%;
+}
+
+.days {
+    display: flex;
+    justify-content: space-between;
+}
+
+.hours-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.hr-container {
+    justify-content: center;
+    text-align: center;
+    background-color: white;
+    padding: 1rem;
+}
