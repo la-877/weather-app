@@ -21,9 +21,12 @@ function fetchApi(location) {
 
         .then(data => {
             todaysTemp.textContent = data.days[0].temp;
-            //console.log(data.days[0]);
+            console.log(data.days[0]);
             const hour = data.days[0].hours[22].datetime.slice(0, 2);
-            renderHourInfo(hour);
+            const condition = data.days[0].hours[22].icon;
+            const hrTemp = data.days[0].hours[22].temp;
+            
+            renderHourInfo(hour, condition, hrTemp);
 
 
         })
@@ -42,7 +45,7 @@ subButtn.addEventListener('click', () => {
     
 });
 
-function renderHourInfo(hrTime){
+function renderHourInfo(hrTime, cndition, hrTemp){
     const hrContainer = document.createElement('div');
     hrContainer.className = 'hr-container';
 
@@ -58,8 +61,18 @@ function renderHourInfo(hrTime){
         hour.textContent = `${parseInt(hrTime) - 12}pm`
     }
     
+    const condition = document.createElement('p');
+    condition.className = 'condition-icon';
+    condition.textContent = cndition;
+
+    const temp = document.createElement('p');
+    temp.id = 'hour-deg';
+    temp.textContent = hrTemp;
+
 
     hrContainer.appendChild(hour);
+    hrContainer.appendChild(condition);
+    hrContainer.appendChild(temp);
     hrsContainer.appendChild(hrContainer);
 
 }
