@@ -13,7 +13,7 @@ body {
     align-items: center;
     position: relative;
     flex-direction: column;
-    max-width: 800px;
+    min-width: 800px;
     height: 650px;
     background-color: coral;
     padding: 2rem;
@@ -50,4 +50,14 @@ body {
     padding: 1rem;
     width: 110px;
     flex-shrink: 0;
+}
+
+#current-time {
+    background-color: aqua;
+}
+
+.bottom{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
 }

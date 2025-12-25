@@ -3,11 +3,18 @@ const loc = document.getElementById('location');
 const subButtn = document.getElementById('submit');
 const todaysTemp = document.getElementById('current-temperature');
 const hrsContainer = document.querySelector('.hours-container');
+const windSpeed = document.getElementById('windspeed');
+const rain = document.getElementById('precepitation');
+const usrLoc = document.getElementById('user-location');
+
+
+
 
 function fetchApi(location) {
+    
     const date = new Date();
     const currentDate = date.toISOString().slice(0, 10);
-    const myKey = '9NG57RXYMHCK8BH8HTVRY8P2L'
+    const myKey = '9NG57RXYMHCK8BH8HTVRY8P2L';
     const apiUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${currentDate}?key=${myKey}`;
 
     fetch(apiUrl)
@@ -21,12 +28,17 @@ function fetchApi(location) {
 
         .then(data => {
             todaysTemp.textContent = data.days[0].temp;
-            console.log(data.days[0]);
-            const hour = data.days[0].hours[22].datetime.slice(0, 2);
-            const condition = data.days[0].hours[22].icon;
-            const hrTemp = data.days[0].hours[22].temp;
-            
-            renderHourInfo(hour, condition, hrTemp);
+            usrLoc.textContent = data.timezone;
+            //console.log(data.days[0]);
+            const currentTime = date.getHours();
+
+            windSpeed.textContent = data.days[0].windspeed;
+            rain.textContent = data.days[0].precip;
+            data.days[0].hours.forEach(hr => {
+                
+                renderHourInfo(hr.datetime.slice(0, 2), hr.icon, hr.temp, currentTime)
+
+            });
 
 
         })
@@ -36,29 +48,52 @@ function fetchApi(location) {
         });
 };
 
+
+
 subButtn.addEventListener('click', () => {
     const inputLoc = loc.value;
     if (inputLoc) {
-        console.log();
+        hrsContainer.innerHTML= '';
         fetchApi(inputLoc);
     }
+    else {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const lat = position.coords.latitude.toFixed(4);
+            const lon = position.coords.longitude.toFixed(4);
+            const coords = `${lat},${lon}`;
+            
+            fetchApi(coords); 
+        })}
     
 });
 
-function renderHourInfo(hrTime, cndition, hrTemp){
+function renderHourInfo(hrTime, cndition, hrTemp, currHour){
     const hrContainer = document.createElement('div');
     hrContainer.className = 'hr-container';
-
-    const hour = document.createElement('hour');
+    
+    const hour = document.createElement('p');
     hour.className = 'hour';
+    if(currHour === parseInt(hrTime)){
+        hrContainer.id = 'current-time';
+        
+    }
     if (hrTime.startsWith('0')) {
         hrTime = hrTime.substring(1); 
+        
     }
-    if (parseInt(hrTime.substring(0,2)) < 12){
+    if (parseInt(hrTime) < 12){
+        if(parseInt(hrTime) === 0){
+            hrTime = '12';
+        }
         hour.textContent = hrTime + 'am';
+        
     }
     else {
-        hour.textContent = `${parseInt(hrTime) - 12}pm`
+        hrTime = parseInt(hrTime) - 12;
+        if(hrTime === 0){
+            hrTime = 12;
+        }
+        hour.textContent = hrTime + 'pm';
     }
     
     const condition = document.createElement('p');
