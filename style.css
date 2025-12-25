@@ -26,6 +26,12 @@ body {
     justify-content: space-around;
 }
 
+.deg-container {
+    display: flex;
+    justify-content: center; 
+    gap: 10px;             
+}
+
 .middle {
     width: 100%;
 }

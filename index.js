@@ -6,7 +6,8 @@ const hrsContainer = document.querySelector('.hours-container');
 const windSpeed = document.getElementById('windspeed');
 const rain = document.getElementById('precepitation');
 const usrLoc = document.getElementById('user-location');
-
+const minTemp = document.getElementById('min-temp');
+const maxTemp = document.getElementById('max-temp');
 
 
 
@@ -26,18 +27,19 @@ function fetchApi(location) {
         })
 
         .then(data => {
-            todaysTemp.textContent = data.days[0].temp;
+
             usrLoc.textContent = data.timezone;
             console.log(data.days);
+            minTemp.textContent = data.days[0].tempmin;
+            maxTemp.textContent = data.days[0].tempmax;
 
-            
             const date = new Date();
             const localTime = date.toLocaleTimeString('en-US', {
                 timeZone: data.timezone,
                 hour: 'numeric',
                 hour12: false,
             });
-            
+
             const currentTime = localTime;
 
 
@@ -46,6 +48,7 @@ function fetchApi(location) {
             data.days[0].hours.forEach(hr => {
 
                 renderHourInfo(hr.datetime.slice(0, 2), hr.icon, hr.temp, currentTime)
+
 
             });
 
@@ -56,14 +59,14 @@ function fetchApi(location) {
             console.error('Error:', error);
         });
 };
-
+/*
 navigator.geolocation.getCurrentPosition((position) => {
     const lat = position.coords.latitude.toFixed(4);
     const lon = position.coords.longitude.toFixed(4);
     const coords = `${lat},${lon}`;
 
     fetchApi(coords);
-});
+});*/
 
 subButtn.addEventListener('click', () => {
     const inputLoc = loc.value;
@@ -76,12 +79,19 @@ subButtn.addEventListener('click', () => {
 });
 
 function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
+    hrTime = parseInt(hrTime);
+    currHour = parseInt(currHour);
+    if (hrTime === currHour) {
+        todaysTemp.textContent = hrTemp;
+    }
+
+
     const hrContainer = document.createElement('div');
     hrContainer.className = 'hr-container';
 
     const hour = document.createElement('p');
     hour.className = 'hour';
-    if (currHour === parseInt(hrTime)) {
+    if (currHour === hrTime) {
         hrContainer.id = 'current-time';
 
     }
