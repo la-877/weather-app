@@ -24,7 +24,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: coral;
+    background-image: url('night.jpg') ;
+    background-size: cover;
     font-family: 'SF Pro Bold';
 }
 
@@ -37,7 +38,7 @@ body {
     flex-direction: column;
     width: 800px;
     height: 730px;
-
+    padding: 2rem;
 }
 
 .top {
@@ -80,9 +81,9 @@ body {
 
 .hours-container {
     display: flex;
-    padding: 1rem;
-    padding-bottom: 3rem;
-    width: 96%;
+    width: calc(100% + 60px); 
+    margin-left: -30px; 
+    margin-right: -30px;
     gap: 1rem;
     overflow-x: auto;
 
@@ -124,6 +125,11 @@ button {
     backdrop-filter: blur(30px);
 }
 
+.container{
+        background: rgba(255, 255, 255, 0.139);
+
+
+}
 .wind-info, .rain-info{
     display: flex;
     font-family: 'SF Pro Regular';

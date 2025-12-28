@@ -33,11 +33,13 @@ locForm.addEventListener('submit', (e) => {
 
 });
 
+todaysTemp.textContent = handleConversion(todaysTemp.textContent);
 function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
 
     currHour = parseInt(currHour);
     if (parseInt(hrTime) === currHour) {
-        todaysTemp.textContent = hrTemp;
+        todaysTemp.textContent = Math.ceil((parseFloat(hrTemp) - 32) * (5/9));
+
     }
 
 
@@ -77,7 +79,7 @@ function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
 
     const temp = document.createElement('p');
     temp.id = 'hour-deg';
-    temp.textContent = hrTemp;
+    temp.textContent = handleConversion(hrTemp);
 
 
     hrContainer.appendChild(hour);
@@ -146,6 +148,9 @@ function updateUI(dayIndex) {
     const day = weatherData.days[dayIndex];
     const cityTimezone = weatherData.timezone;
 
+    minTemp.textContent = handleConversion(day.tempmin);
+    maxTemp.textContent = handleConversion(day.tempmax);
+
     const currentTime = new Date().toLocaleTimeString('en-US', {
         timeZone: cityTimezone, hour: 'numeric', hour12: false
     });
@@ -153,8 +158,7 @@ function updateUI(dayIndex) {
     hrsContainer.innerHTML = '';
     windSpeed.textContent = day.windspeed;
     rain.textContent = day.precip;
-    minTemp.textContent = day.tempmin;
-    maxTemp.textContent = day.tempmax;
+
 
     day.hours.forEach(hr => {
         renderHourInfo(hr.datetime.slice(0, 2), hr.icon, hr.temp, currentTime);
@@ -164,3 +168,8 @@ function updateUI(dayIndex) {
 yesterdayBtn.addEventListener('click', () => updateUI(0));
 todayBtn.addEventListener('click', () => updateUI(1));
 tomorrowBtn.addEventListener('click', () => updateUI(2));
+
+function handleConversion(deg){
+    return Math.ceil((parseFloat(deg) - 32) * (5/9));
+
+}
