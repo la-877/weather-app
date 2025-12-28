@@ -8,58 +8,12 @@ const rain = document.getElementById('precepitation');
 const usrLoc = document.getElementById('user-location');
 const minTemp = document.getElementById('min-temp');
 const maxTemp = document.getElementById('max-temp');
-
-const iconsArr = [];
-
-
-function fetchApi(location) {
-
-    const myKey = '9NG57RXYMHCK8BH8HTVRY8P2L';
-    const apiUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/yesterday/tomorrow/?key=${myKey}`;
+const yesterdayBtn = document.getElementById('yesterday');
+const todayBtn = document.getElementById('today');
+const tomorrowBtn = document.getElementById('tomorrow');
 
 
-    fetch(apiUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok: ' + response.statusText);
-
-            }
-            return response.json();
-        })
-
-        .then(data => {
-
-            usrLoc.textContent = data.timezone;
-            console.log(data.days);
-            minTemp.textContent = data.days[0].tempmin;
-            maxTemp.textContent = data.days[0].tempmax;
-
-            const date = new Date();
-            const localTime = date.toLocaleTimeString('en-US', {
-                timeZone: data.timezone,
-                hour: 'numeric',
-                hour12: false,
-            });
-
-            const currentTime = localTime;
-
-
-            windSpeed.textContent = data.days[0].windspeed;
-            rain.textContent = data.days[0].precip;
-            data.days[0].hours.forEach(hr => {
-
-                renderHourInfo(hr.datetime.slice(0, 2), hr.icon, hr.temp, currentTime)
-
-
-            });
-
-
-        })
-
-        .catch(error => {
-            console.error('Error:', error);
-        });
-};
+let weatherData = null;
 /*
 navigator.geolocation.getCurrentPosition((position) => {
     const lat = position.coords.latitude.toFixed(4);
@@ -71,12 +25,12 @@ navigator.geolocation.getCurrentPosition((position) => {
 
 locForm.addEventListener('submit', (e) => {
     e.preventDefault();
-        const inputLoc = loc.value;
-        if (inputLoc) {
-            hrsContainer.innerHTML = '';
-            fetchApi(inputLoc);
-        }
-    
+    const inputLoc = loc.value;
+    if (inputLoc) {
+        hrsContainer.innerHTML = '';
+        fetchApi(inputLoc);
+    }
+
 });
 
 function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
@@ -134,32 +88,79 @@ function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
 }
 
 
-function iconFinder(conIcon){
-    if(conIcon === 'clear-day'){
+function iconFinder(conIcon) {
+    if (conIcon === 'clear-day') {
         return 'clear-day';
     }
-    else if(conIcon === 'clear-night'){
+    else if (conIcon === 'clear-night') {
         return 'clear-night';
     }
-    else if(conIcon === 'cloudy'){
+    else if (conIcon === 'cloudy') {
         return 'cloudy';
     }
-    else if(conIcon === 'fog'){
+    else if (conIcon === 'fog') {
         return 'fog';
     }
-    else if(conIcon === 'partly-cloudy-day'){
+    else if (conIcon === 'partly-cloudy-day') {
         return 'partly-cloudy-day';
     }
-    else if(conIcon === 'partly-cloudy-night'){
+    else if (conIcon === 'partly-cloudy-night') {
         return 'partly-cloudy-night';
     }
-    else if(conIcon === 'rain'){
+    else if (conIcon === 'rain') {
         return 'rain';
     }
-    else if(conIcon === 'snow'){
+    else if (conIcon === 'snow') {
         return 'snow';
-    } 
-    else if(conIcon === 'wind'){
+    }
+    else if (conIcon === 'wind') {
         return 'wind';
-    } 
+    }
 }
+
+
+function fetchApi(location) {
+    const myKey = '9NG57RXYMHCK8BH8HTVRY8P2L';
+    const apiUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/yesterday/tomorrow/?key=${myKey}`;
+
+
+    fetch(apiUrl)
+
+    fetch(apiUrl)
+        .then(res => res.json())
+        .then(data => {
+            weatherData = data;
+            updateUI(1);
+        })
+
+        .catch(error => {
+
+            console.error('Error:', error);
+
+        });
+}
+
+function updateUI(dayIndex) {
+    if (!weatherData) return;
+
+    const day = weatherData.days[dayIndex];
+    const cityTimezone = weatherData.timezone;
+
+    const currentTime = new Date().toLocaleTimeString('en-US', {
+        timeZone: cityTimezone, hour: 'numeric', hour12: false
+    });
+
+    hrsContainer.innerHTML = '';
+    windSpeed.textContent = day.windspeed;
+    rain.textContent = day.precip;
+    minTemp.textContent = day.tempmin;
+    maxTemp.textContent = day.tempmax;
+
+    day.hours.forEach(hr => {
+        renderHourInfo(hr.datetime.slice(0, 2), hr.icon, hr.temp, currentTime);
+    });
+}
+
+yesterdayBtn.addEventListener('click', () => updateUI(0));
+todayBtn.addEventListener('click', () => updateUI(1));
+tomorrowBtn.addEventListener('click', () => updateUI(2));
