@@ -9,6 +9,7 @@ const usrLoc = document.getElementById('user-location');
 const minTemp = document.getElementById('min-temp');
 const maxTemp = document.getElementById('max-temp');
 
+const iconsArr = [];
 
 
 function fetchApi(location) {
@@ -114,9 +115,11 @@ function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
         hour.textContent = hrTime + 'pm';
     }
 
-    const condition = document.createElement('p');
-    condition.className = 'condition-icon';
-    condition.textContent = cndition;
+
+    const conditionIcon = document.createElement('img');
+    conditionIcon.id = 'condition-icon';
+    conditionIcon.alt = cndition;
+    conditionIcon.src = `../images/${iconFinder(cndition)}.png`;
 
     const temp = document.createElement('p');
     temp.id = 'hour-deg';
@@ -124,10 +127,39 @@ function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
 
 
     hrContainer.appendChild(hour);
-    hrContainer.appendChild(condition);
+    hrContainer.appendChild(conditionIcon);
     hrContainer.appendChild(temp);
     hrsContainer.appendChild(hrContainer);
 
 }
 
 
+function iconFinder(conIcon){
+    if(conIcon === 'clear-day'){
+        return 'clear-day';
+    }
+    else if(conIcon === 'clear-night'){
+        return 'clear-night';
+    }
+    else if(conIcon === 'cloudy'){
+        return 'cloudy';
+    }
+    else if(conIcon === 'fog'){
+        return 'fog';
+    }
+    else if(conIcon === 'partly-cloudy-day'){
+        return 'partly-cloudy-day';
+    }
+    else if(conIcon === 'partly-cloudy-night'){
+        return 'partly-cloudy-night';
+    }
+    else if(conIcon === 'rain'){
+        return 'rain';
+    }
+    else if(conIcon === 'snow'){
+        return 'snow';
+    } 
+    else if(conIcon === 'wind'){
+        return 'wind';
+    } 
+}
