@@ -1,9 +1,31 @@
+@font-face {
+    font-family: 'SF Pro Regular'; 
+    src: url('SF-Pro-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF Pro Bold'; 
+    src: url('SF-Pro-Bold.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Audiowide'; 
+    src: url('Audiowide-Regular.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-
+    background-color: coral;
+    font-family: 'SF Pro Bold';
 }
 
 
@@ -14,57 +36,139 @@ body {
     position: relative;
     flex-direction: column;
     width: 800px;
-    height: 650px;
-    background-color: coral;
-    padding: 2rem;
+    height: 730px;
 
 }
 
-.top{
+.top {
     display: flex;
-    width: 100%;
-    justify-content: space-around;
+    position: relative;
+    height: 235px;
+    width: 780px;
+    justify-content: space-between;
+    padding: 3rem;
+    padding-left: 10rem;
+    padding-right: 10rem;
 }
 
+.degree{
+     display: flex;           
+    justify-content: center;
+    align-items: center; 
+    flex-direction: column;    
+    
+    
+}
 .deg-container {
     display: flex;
-    justify-content: center; 
-    gap: 10px;             
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
 }
 
 .middle {
     width: 100%;
+    height: 350px;
+
 }
 
 .days {
     display: flex;
+    padding: 1rem;
     justify-content: space-between;
 }
 
-.hours-container{
+.hours-container {
     display: flex;
-    width: 100%;
+    padding: 1rem;
+    padding-bottom: 3rem;
+    width: 96%;
     gap: 1rem;
     overflow-x: auto;
-    height: 170px;
+
 
 }
 
 .hr-container {
     justify-content: center;
     text-align: center;
-    background-color: white;
-    padding: 1rem;
-    width: 110px;
+    width: 121px;
+    height: 190px;
     flex-shrink: 0;
+
+}
+
+button {
+    font-family: inherit;
+    width: 200px;
+    height: 43px;
+    
 }
 
 #current-time {
     background-color: aqua;
 }
 
-.bottom{
+.bottom {
     display: flex;
     justify-content: space-around;
     width: 100%;
+    padding: 1rem;
 }
+
+.container, .hr-container, .wind-info, .rain-info, button {
+    background: rgba(255, 255, 255, 0.40);
+    box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 30px;
+    border: 1px white solid;
+    backdrop-filter: blur(30px);
+}
+
+.wind-info, .rain-info{
+    display: flex;
+    font-family: 'SF Pro Regular';
+    width: 320px;
+    padding: 1rem;
+    justify-content: space-between;
+    font-size: 22px;
+}
+
+#user-location {
+    font-family: 'Audiowide';
+    text-transform: uppercase;
+    font-size: 28px;
+    text-align: end;
+}
+
+#current-temperature{
+   display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-size: 96px;
+    height: 96px;
+}
+
+.loc-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+input {
+    color: rgba(60, 60, 67, 0.60);
+    text-align: center;
+    border: none;
+    width: 162px;
+    height: 24px;
+    position: relative;
+    background: rgba(235, 235, 245, 0.60);
+    box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 10px
+}
+
+input:-webkit-autofill {
+    transition: background-color 5000000s ease-in-out 0s;
+}
+

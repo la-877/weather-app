@@ -11,31 +11,30 @@
 <body>
     <div class="container">
         <div class="top">
-            <div>
+            <div class="degree">
                 <h1 id="current-temperature">21</h1>
-
                 <div class="deg-container">
                     <p>Min:
                     <p id="min-temp">0</p>
                     </p>
                     <p>Max:
-                    <p id="min-temp">0</p>
+                    <p id="max-temp">0</p>
                     </p>
                 </div>
             </div>
-
-            <p id="user-location"></p>
-            <form>
-                <input type="text" id="location" placeholder="Enter City">
-                <button id="submit" type="button">S</button>
-            </form>
+            <div class="loc-container">
+                <p id="user-location">Location</p>
+                <form id="loc-form">
+                    <input type="text" id="location" placeholder="Enter City">
+                </form>
+            </div>
 
         </div>
         <div class="middle">
             <div class="days">
-                <p id="yesterday">yesterday</p>
-                <p id="today">today</p>
-                <p id="tomorrow">tomorrow</p>
+                <button id="yesterday">YESTERDAY</button>
+                <button id="today">TODAY</button>
+                <button id="tomorrow">TOMORROW</button>
             </div>
 
             <div class="hours-container">

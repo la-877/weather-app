@@ -1,6 +1,6 @@
 
 const loc = document.getElementById('location');
-const subButtn = document.getElementById('submit');
+const locForm = document.getElementById('loc-form');
 const todaysTemp = document.getElementById('current-temperature');
 const hrsContainer = document.querySelector('.hours-container');
 const windSpeed = document.getElementById('windspeed');
@@ -68,20 +68,20 @@ navigator.geolocation.getCurrentPosition((position) => {
     fetchApi(coords);
 });*/
 
-subButtn.addEventListener('click', () => {
-    const inputLoc = loc.value;
-    if (inputLoc) {
-        hrsContainer.innerHTML = '';
-        fetchApi(inputLoc);
-    }
-
-
+locForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+        const inputLoc = loc.value;
+        if (inputLoc) {
+            hrsContainer.innerHTML = '';
+            fetchApi(inputLoc);
+        }
+    
 });
 
 function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
-    hrTime = parseInt(hrTime);
+
     currHour = parseInt(currHour);
-    if (hrTime === currHour) {
+    if (parseInt(hrTime) === currHour) {
         todaysTemp.textContent = hrTemp;
     }
 
