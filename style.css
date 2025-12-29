@@ -12,19 +12,14 @@
     font-style: normal;
 }
 
-@font-face {
-    font-family: 'Audiowide'; 
-    src: url('Audiowide-Regular.ttf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-}
+
 
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url('night.jpg') ;
+    background-image: url('day.jpg') ;
     background-size: cover;
     font-family: 'SF Pro Bold';
 }
@@ -44,12 +39,13 @@ body {
 .top {
     display: flex;
     position: relative;
-    height: 235px;
+    height: 220px;
     width: 780px;
     justify-content: space-between;
-    padding: 3rem;
     padding-left: 10rem;
     padding-right: 10rem;
+    color: black;
+
 }
 
 .degree{
@@ -77,6 +73,7 @@ body {
     display: flex;
     padding: 1rem;
     justify-content: space-between;
+    padding-bottom: 3rem;
 }
 
 .hours-container {
@@ -86,8 +83,16 @@ body {
     margin-right: -30px;
     gap: 1rem;
     overflow-x: auto;
+    padding-bottom: 3rem;
 
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 
+}
+
+.hrs-container::-webkit-scrollbar {
+    display: none;             
 }
 
 .hr-container {
@@ -103,11 +108,18 @@ button {
     font-family: inherit;
     width: 200px;
     height: 43px;
+    cursor: pointer;
+    outline: none;
+    scrollbar-width: thin;
+    transition: transform 0.2s ease;
     
 }
+button:active {
+    transform: scale(0.95); 
+}
 
-#current-time {
-    background-color: aqua;
+button.active-day {
+    background-color: white;
 }
 
 .bottom {
@@ -126,6 +138,7 @@ button {
 }
 
 .container{
+    border: none;
         background: rgba(255, 255, 255, 0.139);
 
 
@@ -140,7 +153,6 @@ button {
 }
 
 #user-location {
-    font-family: 'Audiowide';
     text-transform: uppercase;
     font-size: 28px;
     text-align: end;
@@ -160,18 +172,25 @@ button {
 .loc-container {
     display: flex;
     flex-direction: column;
-    justify-content: left;
+    align-items: flex-end; 
+    text-align: right;
 }
+
+form {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
 input {
     color: rgba(60, 60, 67, 0.60);
     text-align: center;
     border: none;
     width: 162px;
     height: 24px;
-    position: relative;
     background: rgba(235, 235, 245, 0.60);
     box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.15);
-    border-radius: 10px
+    border-radius: 10px;
 }
 
 input:-webkit-autofill {
@@ -184,4 +203,8 @@ img{
     background: rgba(0, 0, 0, 0.25);
     border-radius: 10px;;
     padding: 5px;
+}
+
+#current-time {
+    background: white;
 }

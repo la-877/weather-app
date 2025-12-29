@@ -33,12 +33,11 @@ locForm.addEventListener('submit', (e) => {
 
 });
 
-todaysTemp.textContent = handleConversion(todaysTemp.textContent);
 function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
 
     currHour = parseInt(currHour);
     if (parseInt(hrTime) === currHour) {
-        todaysTemp.textContent = Math.ceil((parseFloat(hrTemp) - 32) * (5/9));
+        todaysTemp.textContent = `${convertDeg(hrTemp)}°c`;
 
     }
 
@@ -48,7 +47,7 @@ function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
 
     const hour = document.createElement('p');
     hour.className = 'hour';
-    if (currHour === hrTime) {
+    if (currHour == hrTime) {
         hrContainer.id = 'current-time';
 
     }
@@ -79,7 +78,7 @@ function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
 
     const temp = document.createElement('p');
     temp.id = 'hour-deg';
-    temp.textContent = handleConversion(hrTemp);
+    temp.textContent = `${convertDeg(hrTemp)}°` ;
 
 
     hrContainer.appendChild(hour);
@@ -145,31 +144,55 @@ function fetchApi(location) {
 function updateUI(dayIndex) {
     if (!weatherData) return;
 
+    const buttons = [yesterdayBtn, todayBtn, tomorrowBtn];
+    buttons.forEach(btn => btn.classList.remove('active-day'));
+    buttons[dayIndex].classList.add('active-day');
+    
     const day = weatherData.days[dayIndex];
     const cityTimezone = weatherData.timezone;
+    usrLoc.textContent = cityTimezone;
 
-    minTemp.textContent = handleConversion(day.tempmin);
-    maxTemp.textContent = handleConversion(day.tempmax);
+
+    minTemp.textContent =   `${convertDeg(day.tempmin)}°`;
+    maxTemp.textContent = `${convertDeg(day.tempmax)}°`;
+
+    
 
     const currentTime = new Date().toLocaleTimeString('en-US', {
         timeZone: cityTimezone, hour: 'numeric', hour12: false
     });
 
     hrsContainer.innerHTML = '';
-    windSpeed.textContent = day.windspeed;
-    rain.textContent = day.precip;
+    windSpeed.textContent = `${convertWind(day.windspeed)} km/h`;
+    rain.textContent = `${convertPrecip(day.precip)} mm`;
 
+    
 
     day.hours.forEach(hr => {
         renderHourInfo(hr.datetime.slice(0, 2), hr.icon, hr.temp, currentTime);
     });
+
+    setTimeout(() => {
+    const activeHour = document.getElementById('current-time');
+    if (activeHour) {
+        activeHour.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+    }
+}, 100);
 }
 
 yesterdayBtn.addEventListener('click', () => updateUI(0));
 todayBtn.addEventListener('click', () => updateUI(1));
 tomorrowBtn.addEventListener('click', () => updateUI(2));
 
-function handleConversion(deg){
-    return Math.ceil((parseFloat(deg) - 32) * (5/9));
+function convertDeg(f){
+    return Math.round((parseFloat(f) - 32) * (5/9));
 
+}
+function convertWind(mph) {
+    return Math.round(parseFloat(mph) * 1.60934);
+}
+
+function convertPrecip(inches) {
+    const mm = parseFloat(inches) * 25.4;
+    return mm.toFixed(1); 
 }
