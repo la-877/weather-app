@@ -25,10 +25,11 @@ navigator.geolocation.getCurrentPosition((position) => {
 
 locForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const inputLoc = loc.value;
+    const inputLoc = loc.value || usrLoc.textContent;
     if (inputLoc) {
         hrsContainer.innerHTML = '';
         fetchApi(inputLoc);
+        loc.value = '';
     }
 
 });
@@ -100,7 +101,6 @@ function fetchApi(location) {
     const myKey = '9NG57RXYMHCK8BH8HTVRY8P2L';
     const apiUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/yesterday/tomorrow/?key=${myKey}`;
 
-
     fetch(apiUrl)
 
     fetch(apiUrl)
@@ -115,6 +115,7 @@ function fetchApi(location) {
             console.error('Error:', error);
 
         });
+
 }
 
 function updateUI(dayIndex) {
@@ -158,6 +159,7 @@ function updateUI(dayIndex) {
     updateBackground(currentTime);
 }
 
+
 yesterdayBtn.addEventListener('click', () => updateUI(0));
 todayBtn.addEventListener('click', () => updateUI(1));
 tomorrowBtn.addEventListener('click', () => updateUI(2));
@@ -177,11 +179,15 @@ function convertPrecip(inches) {
 
 function updateBackground(currHour) {
     const body = document.body;
+    const container = document.getElementById('top');
     const hour = parseInt(currHour);
 
     if (hour >= 6 && hour < 18) {
         body.style.backgroundImage = "url('../images/day.jpg')";
+        container.style.color = 'black';
+
     } else {
         body.style.backgroundImage = "url('../images/night.jpg')";
+        container.style.color = 'white';
     }
 }

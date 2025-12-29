@@ -18,13 +18,18 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     background-image: url('../images/night.jpg') ;
     background-size: cover;
     font-family: 'SF Pro Bold';
+    padding: 1.5rem; 
+    box-sizing: border-box;
     transition: background-image 1s ease-in-out;
 }
 
+* {
+    box-sizing: border-box;
+}
 
 .container {
     display: flex;
@@ -32,20 +37,22 @@ body {
     align-items: center;
     position: relative;
     flex-direction: column;
-    width: 800px;
-    height: 730px;
+    margin: 20px;
+    width: 85vw;
+    max-width: 800px;
+    height: auto;
     padding: 2rem;
+    gap: 2rem;
+    
 }
 
 .top {
     display: flex;
     position: relative;
-    height: 220px;
-    width: 780px;
+    width: 100%;
     justify-content: space-between;
-    padding-left: 10rem;
-    padding-right: 10rem;
-    color: black;
+    padding: 1rem 2rem ;
+    color: white;
 
 }
 
@@ -66,7 +73,7 @@ body {
 
 .middle {
     width: 100%;
-    height: 350px;
+    max-height: 350px;
 
 }
 
@@ -133,6 +140,7 @@ button.active-day {
 .bottom {
     display: flex;
     justify-content: space-around;
+    gap: 5rem;
     width: 100%;
     padding: 1rem;
 }
@@ -157,12 +165,12 @@ button.active-day {
     width: 320px;
     padding: 1rem;
     justify-content: space-between;
-    font-size: 22px;
+    font-size: clamp(16px, 3vw,22px);
 }
 
 #user-location {
     text-transform: uppercase;
-    font-size: 28px;
+    font-size: clamp(18px, 5vw, 28px);
     text-align: end;
 }
 
@@ -173,8 +181,8 @@ button.active-day {
     margin: 0;
     padding: 0;
     text-align: center;
-    font-size: 96px;
-    height: 96px;
+    font-size: clamp(60px, 15vw, 96px);
+    height: auto;
 }
 
 .loc-container {
@@ -187,6 +195,8 @@ button.active-day {
 form {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
     width: 100%;
 }
 
@@ -194,11 +204,13 @@ input {
     color: rgba(60, 60, 67, 0.60);
     text-align: center;
     border: none;
-    width: 162px;
-    height: 24px;
+    padding: 0.2rem;
+    max-width: 162px;
+    max-height: 30px;
     background: rgba(235, 235, 245, 0.60);
     box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
+    font-size: clamp(13px, 3vw, 18px);
 }
 
 input:-webkit-autofill {
@@ -206,8 +218,8 @@ input:-webkit-autofill {
 }
 
 img{
-    width: 64px;
-    height: 64px;
+    max-width: 64px;
+    max-height: 64px;
     background: rgba(0, 0, 0, 0.25);
     border-radius: 10px;;
     padding: 5px;
@@ -215,4 +227,56 @@ img{
 
 #current-time {
     background: white;
+}
+
+
+#refresh{
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 50%;
+    padding: 1px;
+}
+#refresh img{
+    max-width: 30px;
+    max-height: 30px;
+    background: none;
+}
+
+#refresh:active {
+    transform: rotate(180deg);
+}
+
+@media (max-width: 800px) {
+  .container {
+    flex-direction: column;
+    
+  }
+  .top {
+    height: auto;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .loc-container {
+    align-items: center;
+    text-align: center;
+  }
+
+  .top, .loc-container,.middle, .bottom{
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+
+   .wind-info, .rain-info {
+    width: 100%;
+   }
+
+  .days {
+    gap: 1rem;
+  }
+
 }
