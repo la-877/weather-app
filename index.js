@@ -37,7 +37,7 @@ function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
 
     currHour = parseInt(currHour);
     if (parseInt(hrTime) === currHour) {
-        todaysTemp.textContent = `${convertDeg(hrTemp)}°c`;
+        todaysTemp.textContent = convertDeg(hrTemp);
 
     }
 
@@ -78,7 +78,7 @@ function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
 
     const temp = document.createElement('p');
     temp.id = 'hour-deg';
-    temp.textContent = `${convertDeg(hrTemp)}°` ;
+    temp.textContent = `${convertDeg(hrTemp)}°`;
 
 
     hrContainer.appendChild(hour);
@@ -90,33 +90,9 @@ function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
 
 
 function iconFinder(conIcon) {
-    if (conIcon === 'clear-day') {
-        return 'clear-day';
-    }
-    else if (conIcon === 'clear-night') {
-        return 'clear-night';
-    }
-    else if (conIcon === 'cloudy') {
-        return 'cloudy';
-    }
-    else if (conIcon === 'fog') {
-        return 'fog';
-    }
-    else if (conIcon === 'partly-cloudy-day') {
-        return 'partly-cloudy-day';
-    }
-    else if (conIcon === 'partly-cloudy-night') {
-        return 'partly-cloudy-night';
-    }
-    else if (conIcon === 'rain') {
-        return 'rain';
-    }
-    else if (conIcon === 'snow') {
-        return 'snow';
-    }
-    else if (conIcon === 'wind') {
-        return 'wind';
-    }
+    const validIcons = ['clear-day', 'clear-night', 'cloudy', 'fog', 'partly-cloudy-day', 'partly-cloudy-night', 'rain', 'snow', 'wind'];
+
+    return validIcons.includes(conIcon) ? conIcon : 'cloudy';
 }
 
 
@@ -147,16 +123,16 @@ function updateUI(dayIndex) {
     const buttons = [yesterdayBtn, todayBtn, tomorrowBtn];
     buttons.forEach(btn => btn.classList.remove('active-day'));
     buttons[dayIndex].classList.add('active-day');
-    
+
     const day = weatherData.days[dayIndex];
     const cityTimezone = weatherData.timezone;
     usrLoc.textContent = cityTimezone;
 
 
-    minTemp.textContent =   `${convertDeg(day.tempmin)}°`;
+    minTemp.textContent = `${convertDeg(day.tempmin)}°`;
     maxTemp.textContent = `${convertDeg(day.tempmax)}°`;
 
-    
+
 
     const currentTime = new Date().toLocaleTimeString('en-US', {
         timeZone: cityTimezone, hour: 'numeric', hour12: false
@@ -166,26 +142,28 @@ function updateUI(dayIndex) {
     windSpeed.textContent = `${convertWind(day.windspeed)} km/h`;
     rain.textContent = `${convertPrecip(day.precip)} mm`;
 
-    
+
 
     day.hours.forEach(hr => {
         renderHourInfo(hr.datetime.slice(0, 2), hr.icon, hr.temp, currentTime);
     });
 
     setTimeout(() => {
-    const activeHour = document.getElementById('current-time');
-    if (activeHour) {
-        activeHour.scrollIntoView({ behavior: 'smooth', inline: 'center' });
-    }
-}, 100);
+        const activeHour = document.getElementById('current-time');
+        if (activeHour) {
+            activeHour.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+        }
+    }, 100);
+
+    updateBackground(currentTime);
 }
 
 yesterdayBtn.addEventListener('click', () => updateUI(0));
 todayBtn.addEventListener('click', () => updateUI(1));
 tomorrowBtn.addEventListener('click', () => updateUI(2));
 
-function convertDeg(f){
-    return Math.round((parseFloat(f) - 32) * (5/9));
+function convertDeg(f) {
+    return Math.round((parseFloat(f) - 32) * (5 / 9));
 
 }
 function convertWind(mph) {
@@ -194,5 +172,16 @@ function convertWind(mph) {
 
 function convertPrecip(inches) {
     const mm = parseFloat(inches) * 25.4;
-    return mm.toFixed(1); 
+    return mm.toFixed(1);
+}
+
+function updateBackground(currHour) {
+    const body = document.body;
+    const hour = parseInt(currHour);
+
+    if (hour >= 6 && hour < 18) {
+        body.style.backgroundImage = "url('../images/day.jpg')";
+    } else {
+        body.style.backgroundImage = "url('../images/night.jpg')";
+    }
 }
