@@ -11,6 +11,7 @@ const maxTemp = document.getElementById('max-temp');
 const yesterdayBtn = document.getElementById('yesterday');
 const todayBtn = document.getElementById('today');
 const tomorrowBtn = document.getElementById('tomorrow');
+const topContainer = document.querySelector('.top');
 
 
 let weatherData = null;
@@ -184,10 +185,10 @@ function updateBackground(currHour) {
 
     if (hour >= 6 && hour < 18) {
         body.style.backgroundImage = "url('../images/day.jpg')";
-        container.style.color = 'black';
+        topContainer.style.color = 'black';
 
     } else {
         body.style.backgroundImage = "url('../images/night.jpg')";
-        container.style.color = 'white';
+        topContainer.style.color = 'white';
     }
 }

@@ -259,7 +259,8 @@ img{
     text-align: center;
   }
 
-  .loc-container {
+  .loc-container, #loc-form {
+    justify-content: center;
     align-items: center;
     text-align: center;
   }
