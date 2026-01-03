@@ -45,7 +45,9 @@ function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
 
 
     const hrContainer = document.createElement('div');
-    hrContainer.className = 'hr-container';
+    hrContainer.className = 'hr-container animate-in';
+
+
 
     const hour = document.createElement('p');
     hour.className = 'hour';
@@ -153,7 +155,7 @@ function updateUI(dayIndex) {
     setTimeout(() => {
         const activeHour = document.getElementById('current-time');
         if (activeHour) {
-            activeHour.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+            activeHour.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         }
     }, 100);
 
@@ -180,7 +182,6 @@ function convertPrecip(inches) {
 
 function updateBackground(currHour) {
     const body = document.body;
-    const container = document.getElementById('top');
     const hour = parseInt(currHour);
 
     if (hour >= 6 && hour < 18) {
