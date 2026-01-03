@@ -19,7 +19,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url('../images/night.jpg');
+    background-image: url('../images/day.jpg');
     background-size: cover;
     font-family: 'SF Pro Bold';
     padding: 1.5rem;

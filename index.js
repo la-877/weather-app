@@ -15,14 +15,14 @@ const topContainer = document.querySelector('.top');
 
 
 let weatherData = null;
-/*
+
 navigator.geolocation.getCurrentPosition((position) => {
     const lat = position.coords.latitude.toFixed(4);
     const lon = position.coords.longitude.toFixed(4);
     const coords = `${lat},${lon}`;
 
     fetchApi(coords);
-});*/
+});
 
 locForm.addEventListener('submit', (e) => {
     e.preventDefault();
