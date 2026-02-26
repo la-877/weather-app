@@ -78,7 +78,7 @@ function renderHourInfo(hrTime, cndition, hrTemp, currHour) {
     const conditionIcon = document.createElement('img');
     conditionIcon.id = 'condition-icon';
     conditionIcon.alt = cndition;
-    conditionIcon.src = `../images/${iconFinder(cndition)}.png`;
+    conditionIcon.src = `images/${iconFinder(cndition)}.png`;
 
     const temp = document.createElement('p');
     temp.id = 'hour-deg';
@@ -101,8 +101,8 @@ function iconFinder(conIcon) {
 
 
 function fetchApi(location) {
-    const myKey = '9NG57RXYMHCK8BH8HTVRY8P2L';
-    const apiUrl = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/yesterday/tomorrow/?key=${myKey}`;
+
+   const apiUrl = `/api/weather?location=${encodeURIComponent(location)}`;
 
     fetch(apiUrl)
 
@@ -185,7 +185,7 @@ function updateBackground(currHour) {
     const hour = parseInt(currHour);
 
     if (hour >= 6 && hour < 18) {
-        body.style.backgroundImage = "url('../images/day.jpg')";
+        body.style.backgroundImage = "url('images/day.jpg')";
         topContainer.style.color = 'black';
 
     } else {
